@@ -1,8 +1,6 @@
 services:
   app:
     build: .
-    ports:
-      - "8080:8080"
     env_file:
       - ./.env
     depends_on:
@@ -10,6 +8,15 @@ services:
         condition: service_healthy
     # Perintah ini pertama-tama menjalankan migrasi database, kemudian memulai server web.
     command: sh -c "./main --migrate && ./main"
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
 
   db:
     image: postgres:latest
