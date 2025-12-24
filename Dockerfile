@@ -31,7 +31,7 @@ COPY --from=builder /app/main .
 COPY db ./db
 
 # Expose port yang digunakan oleh aplikasi
-EXPOSE 8080
+EXPOSE 8000
 
 # Perintah untuk menjalankan aplikasi
 CMD ["./main"]

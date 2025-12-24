@@ -47,7 +47,7 @@ func main() {
 	route.UserRoute(server, *userController)
 	route.PostRoute(server, *postController, mw)
 
-	err := server.Run(":8080")
+	err := server.Run(":8000")
 	if err != nil {
 		return
 	}
