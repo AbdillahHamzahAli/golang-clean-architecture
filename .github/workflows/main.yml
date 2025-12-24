@@ -54,15 +54,8 @@ jobs:
 
             export IMAGE_TAG=${{ github.sha }}
 
-            # Stop and remove all running containers for this project
-            docker compose -f docker-compose.prod.yml down
+            docker compose -f docker-compose.prod.yml pull app
+            docker compose -f docker-compose.prod.yml pull traefik
 
-            # Forcibly remove the old, cached traefik image. Continue even if it fails (e.g., image not found).
-            docker rmi traefik:v3.0 || true
-
-            # Pull fresh images for all services
-            docker compose -f docker-compose.prod.yml pull
-
-            # Start all services fresh
-            docker compose -f docker-compose.prod.yml up -d
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans --force-recreate
           debug: true
