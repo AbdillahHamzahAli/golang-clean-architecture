@@ -12,9 +12,9 @@ services:
     command: sh -c "./main --migrate && ./main"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`202.10.42.4`, `localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.app.rule=Host(`202.10.42.4`, `localhost`) && PathPrefix(`/api/v1`)"
       - "traefik.http.routers.app.entrypoints=web"
-      - "traefik.http.middlewares.strip-api-prefix.stripprefix.prefixes=/api"
+      - "traefik.http.middlewares.strip-api-prefix.stripprefix.prefixes=/api/v1"
       - "traefik.http.routers.app.middlewares=strip-api-prefix@docker"
       - "traefik.http.services.app.loadbalancer.server.port=8000"
 
