@@ -19,7 +19,6 @@ services:
       - "traefik.http.middlewares.strip-api-prefix.stripprefix.prefixes=/api"
       - "traefik.http.routers.app.middlewares=strip-api-prefix@docker"
       - "traefik.http.services.app.loadbalancer.server.port=8000"
-      - "com.centurylinklabs.watchtower.enable=true"
   traefik:
     image: traefik:v3.0
     command:

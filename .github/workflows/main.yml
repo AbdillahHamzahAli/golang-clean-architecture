@@ -55,6 +55,7 @@ jobs:
             export IMAGE_TAG=${{ github.sha }}
 
             docker compose -f docker-compose.prod.yml pull app
+            docker compose -f docker-compose.prod.yml pull traefik
 
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
           debug: true
