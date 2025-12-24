@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    image: abdillahhamzahali/golang-clean-architecture:${IMAGE_TAG:-latest}
     env_file:
       - ./.env
     deploy:
@@ -9,17 +9,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    expose:
-      - "8000"
     command: sh -c "./main --migrate && ./main"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.app.rule=Host(`202.10.42.4`) && PathPrefix(`/api`)"
       - "traefik.http.routers.app.entrypoints=web"
       - "traefik.http.middlewares.strip-api-prefix.stripprefix.prefixes=/api"
       - "traefik.http.routers.app.middlewares=strip-api-prefix@docker"
       - "traefik.http.services.app.loadbalancer.server.port=8000"
-      - "com.centurylinklabs.watchtower.enable=true"
+
   traefik:
     image: traefik:v3.0
     command:
