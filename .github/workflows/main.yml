@@ -36,6 +36,10 @@ jobs:
     environment: staging
     runs-on: ubuntu-latest
     steps:
+      - name: Test Network Connectivity
+        run: |
+          echo "Attempting to connect to host ${{ secrets.SERVER }} on port ${{ secrets.SERVER_PORT }}"
+          nc -zv ${{ secrets.SERVER }} ${{ secrets.SERVER_PORT }}
       - name: Deploy to staging environment
         uses: appleboy/ssh-action@v0.1.10
         with:
