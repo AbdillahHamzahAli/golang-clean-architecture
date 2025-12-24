@@ -36,10 +36,6 @@ jobs:
     environment: staging
     runs-on: ubuntu-latest
     steps:
-      - name: Check secret length
-        run: |
-          KEY_VALUE="${{ secrets.SSH_PRIVATE_KEY }}"
-          echo "Length of secret is: ${#KEY_VALUE}"
       - name: Deploy to staging environment
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -54,7 +50,7 @@ jobs:
 
             export IMAGE_TAG=${{ github.sha }}
 
-            docker-compose -f docker-compose.prod.yml pull app
+            docker compose -f docker-compose.prod.yml pull app
 
-            docker-compose -f docker-compose.prod.yml up -d --remove-orphans
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans
           debug: true
