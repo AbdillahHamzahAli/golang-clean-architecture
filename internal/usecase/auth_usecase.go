@@ -1,37 +1,37 @@
 package usecase
 
 import (
-    "context"
-    "errors"
+	"context"
+	"errors"
 
-    "github.com/AbdillahHamzahAli/golang-clean-architecture/internal/domain/dto"
-    "github.com/AbdillahHamzahAli/golang-clean-architecture/internal/domain/entity"
-    "github.com/AbdillahHamzahAli/golang-clean-architecture/internal/repository"
-    "golang.org/x/crypto/bcrypt"
+	"github.com/AbdillahHamzahAli/golang-clean-architecture/internal/domain/dto"
+	"github.com/AbdillahHamzahAli/golang-clean-architecture/internal/domain/entity"
+	"github.com/AbdillahHamzahAli/golang-clean-architecture/internal/repository"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type AuthUsecase interface {
-    Register(ctx context.Context, request dto.RegisterUserRequest) (dto.UserResponse, error)
-    Login(ctx context.Context, request dto.LoginUserRequest) (dto.UserResponse, error)
+	Register(ctx context.Context, request dto.RegisterUserRequest) (dto.UserResponse, error)
+	Login(ctx context.Context, request dto.LoginUserRequest) (dto.UserResponse, error)
 }
 
 type authUsecase struct {
-    repo       repository.UserRepository
-    jwtUsecase JwtUsecase
+	repo       repository.UserRepository
+	jwtUsecase JwtUsecase
 }
 
 func NewAuthUsecase(repo repository.UserRepository, jwtUsecase JwtUsecase) AuthUsecase {
-    return &authUsecase{
-        repo:       repo,
-        jwtUsecase: jwtUsecase,
-    }
+	return &authUsecase{
+		repo:       repo,
+		jwtUsecase: jwtUsecase,
+	}
 }
 
 func (u *authUsecase) Register(ctx context.Context, request dto.RegisterUserRequest) (dto.UserResponse, error) {
-    _, flag, err := u.repo.GetByEmail(request.Email)
-    if err != nil {
-        return dto.UserResponse{}, err
-    }
+	_, flag, err := u.repo.GetByEmail(request.Email)
+	if err != nil {
+		return dto.UserResponse{}, err
+	}
 
 	if flag {
 		return dto.UserResponse{}, errors.New("user already exists")
@@ -54,9 +54,11 @@ func (u *authUsecase) Register(ctx context.Context, request dto.RegisterUserRequ
 	}
 
 	return dto.UserResponse{
-		ID:       userReg.ID.String(),
-		Username: userReg.Username,
-		Email:    userReg.Email,
+		ID:        userReg.ID.String(),
+		Username:  userReg.Username,
+		Email:     userReg.Email,
+		CreatedAt: userReg.CreatedAt,
+		UpdatedAt: userReg.UpdatedAt,
 	}, nil
 
 }

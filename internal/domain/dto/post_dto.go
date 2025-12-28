@@ -16,14 +16,14 @@ type PostResponse struct {
 }
 
 type PostCreateRequest struct {
-	Title   string `json:"title" validate:"required,max=100"`
-	Content string `json:"content" validate:"required,max=100"`
-	UserID uuid.UUID `json:"user_id" validate:"required"`
+	Title   string    `json:"title" binding:"required,max=100"`
+	Content string    `json:"content" binding:"required,max=100"`
+	UserID  uuid.UUID `json:"user_id" binding:"required"`
 }
 
 type PostUpdateRequest struct {
-	ID      string `json:"id" validate:"required"`
-	Title   string `json:"title" validate:"required,max=100"`
-	Content string `json:"content" validate:"required,max=100"`
-	UserID uuid.UUID `json:"user_id" validate:"required"`
+	ID      string    `json:"id" binding:"required"`
+	Title   string    `json:"title" binding:"required,max=100"`
+	Content string    `json:"content" binding:"required,max=100"`
+	UserID  uuid.UUID `json:"user_id" binding:"required"`
 }

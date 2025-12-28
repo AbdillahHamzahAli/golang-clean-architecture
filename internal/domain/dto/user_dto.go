@@ -12,12 +12,12 @@ type UserResponse struct {
 }
 
 type RegisterUserRequest struct {
-	Username string `json:"username" validate:"required,max=100"`
-	Email    string `json:"email" validate:"required,max=100"`
-	Password string `json:"password" validate:"required,max=100"`
+	Username string `json:"username" binding:"required,max=100"`
+	Email    string `json:"email" binding:"required,email,max=100"`
+	Password string `json:"password" binding:"required,max=100"`
 }
 
 type LoginUserRequest struct {
-	Email    string `json:"email" validate:"required,max=100"`
-	Password string `json:"password" validate:"required,max=100"`
+	Email    string `json:"email" binding:"required,max=100"`
+	Password string `json:"password" binding:"required,max=100"`
 }

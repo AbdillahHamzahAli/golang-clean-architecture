@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/AbdillahHamzahAli/golang-clean-architecture/internal/domain/entity"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -38,6 +39,11 @@ func UserSeed(db *gorm.DB) error {
 	}
 
 	for _, user := range users {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return err
+		}
+		user.Password = string(hashedPassword)
 		if err := db.Clauses(clause.OnConflict{
 			UpdateAll: true,
 		}).Create(&user).Error; err != nil {

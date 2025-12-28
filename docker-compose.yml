@@ -12,7 +12,7 @@ services:
         condition: service_healthy
     expose:
       - "8000"
-    command: sh -c "go build -o ./tmp/main ./cmd/web/main.go && ./tmp/main --migrate && air"
+    command: sh -c "air"
 
   nginx:
     image: nginx:latest

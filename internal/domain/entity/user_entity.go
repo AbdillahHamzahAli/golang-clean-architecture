@@ -13,6 +13,6 @@ type User struct {
 	Password string    `gorm:"type:varchar(255)" json:"password"`
 
 	Posts     []Post    `gorm:"foreignkey:UserID" json:"posts"`
-	CreatedAt time.Time `gorm:"type:timestamp with time zone" json:"created_at"`
-	UpdatedAt time.Time `gorm:"type:timestamp with time zone" json:"updated_at"`
+	CreatedAt time.Time `gorm:"type:timestamp with time zone,default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt time.Time `gorm:"type:timestamp with time zone,default:CURRENT_TIMESTAMP" json:"updated_at"`
 }

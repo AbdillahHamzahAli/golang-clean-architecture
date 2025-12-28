@@ -21,10 +21,11 @@ func main() {
 	)
 
 	server := gin.Default()
+	server.Use(middleware.RateLimiter())
+
 	if len(os.Args) > 1 {
 		fmt.Println("Running command")
 		cmd.Commands(db)
-		return
 	}
 
 	// Repositories
