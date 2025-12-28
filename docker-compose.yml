@@ -1,17 +1,18 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     env_file:
       - ./.env
-    deploy:
-      mode: replicated
-      replicas: 3
+    volumes:
+      - .:/app
     depends_on:
       db:
         condition: service_healthy
     expose:
       - "8000"
-    command: sh -c "./main --migrate && ./main"
+    command: sh -c "go build -o ./tmp/main ./cmd/web/main.go && ./tmp/main --migrate && air"
 
   nginx:
     image: nginx:latest

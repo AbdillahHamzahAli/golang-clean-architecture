@@ -40,6 +40,22 @@ func (r *postRepo) Delete(ctx context.Context, id string) (bool, error) {
 	return true, nil
 }
 
+func (r *postRepo) GetPosts(ctx context.Context, offset int, limit int) ([]entity.Post, error) {
+	var posts []entity.Post
+	if err := r.db.WithContext(ctx).Offset(offset).Limit(limit).Find(&posts).Error; err != nil {
+		return []entity.Post{}, err
+	}
+	return posts, nil
+}
+
+func (r *postRepo) GetCount(ctx context.Context) (int64, error) {
+	var count int64
+	if err := r.db.WithContext(ctx).Model(&entity.Post{}).Count(&count).Error; err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
 func (r *postRepo) GetById(ctx context.Context, id string) (entity.Post, bool, error) {
 	var post entity.Post
 	if err := r.db.WithContext(ctx).Where("id = ?", id).First(&post).Error; err != nil {
