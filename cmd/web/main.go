@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"net/http"
+
 	"github.com/AbdillahHamzahAli/golang-clean-architecture/cmd"
 	"github.com/AbdillahHamzahAli/golang-clean-architecture/internal/config"
 	deliveryhttp "github.com/AbdillahHamzahAli/golang-clean-architecture/internal/delivery/http"
@@ -27,6 +29,12 @@ func main() {
 		fmt.Println("Running command")
 		cmd.Commands(db)
 	}
+
+	server.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
 
 	// Repositories
 	userRepo := pgsql.NewUserRepoPG(db)
